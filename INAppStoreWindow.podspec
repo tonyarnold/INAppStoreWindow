@@ -9,31 +9,35 @@ Pod::Spec.new do |s|
     s.requires_arc  = true
     s.license       = { :type => 'BSD', :text => 'INAppStoreWindow is licensed under the BSD license.'}
     
-    s.default_subspec = 'Core'
-
+    default_subspec = 'INAppStoreWindow/Core'
+    
     s.subspec 'Core' do |core|
-      core.source_files = 'INAppStoreWindow/*.{h,m}'
+      core.source_files  = 'INAppStoreWindow/*.{h,m}'
+      core.exclude_files = 'Extensions/**'
       core.requires_arc = true
     end
-    
+
     s.subspec 'Swizzling' do |swizzle|
       swizzle.dependency 'INAppStoreWindow/Core'
-      
+
       swizzle.source_files = 'Extensions/INAppStoreWindowSwizzling.{c,h}'
+      swizzle.header_dir   = 'INAppStoreWindow'
       swizzle.requires_arc = true
     end
-    
+
     s.subspec 'CoreUIRenderer' do |coreui|
       coreui.dependency 'INAppStoreWindow/Swizzling'
-      
+
       coreui.source_files = 'Extensions/INTitlebarView+CoreUIRenderer.{m,h}'
+      coreui.header_dir   = 'INAppStoreWindow'
       coreui.requires_arc = true
     end
-    
+
     s.subspec 'NSDocumentFixes' do |docfixes|
       docfixes.dependency 'INAppStoreWindow/Swizzling'
-      
+
       docfixes.source_files = 'Extensions/NSDocument+INAppStoreWindowFixes.{m,h}'
+      docfixes.header_dir   = 'INAppStoreWindow'
       docfixes.requires_arc = true
     end
 end
